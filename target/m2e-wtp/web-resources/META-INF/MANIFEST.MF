@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: NewsScraper
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Bhavish
+Implementation-Vendor-Id: com.bhavish
+Build-Jdk: 1.8.0_144
+Implementation-URL: http://projects.spring.io/spring-boot/NewsScraper/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
