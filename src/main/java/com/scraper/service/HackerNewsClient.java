@@ -1,11 +1,8 @@
 package com.scraper.service;
 
 
-import java.util.Date;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 
 import com.scraper.bean.TopNews;
+import com.scraper.constants.ScraperConstants;
 import com.scraper.jpa.TopNewsRepository;
 
 @Component
@@ -32,12 +30,18 @@ public class HackerNewsClient {
 	TopNews topNews;
 	
 	public void getTopNewsData() throws Exception {
-		RestTemplate restTemplate = new RestTemplate();
-		//Hitting the page for scraping the data
-		String result = restTemplate.getForObject("https://news.ycombinator.com", String.class);
-		Document doc =  Jsoup.parse(result);  
-		log.info("title is: " + doc.title());  
-		Elements links = doc.getElementsByClass("storylink");  
-		links.forEach(link -> topNewsRepository.save(new TopNews(link.text(), link.attr("href"))));
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			//Hitting the page for scraping the data
+			log.info("Hitting url "+ScraperConstants.CLIENT_URl);
+			String result = restTemplate.getForObject(ScraperConstants.CLIENT_URl, String.class);
+			Document doc =  Jsoup.parse(result);  
+			Elements links = doc.getElementsByClass(ScraperConstants.STORY_LNK);  
+			links.forEach(link -> topNewsRepository.save(new TopNews(link.text(), link.attr(ScraperConstants.SOURCE))));
+			log.info("Top News from" +ScraperConstants.CLIENT_URl+" are sucessfully persited and count is "+links.size());
+		} catch (Exception e) {
+			log.info("Error:" + e.getMessage());
+			throw e;
+		}
 	}
 }

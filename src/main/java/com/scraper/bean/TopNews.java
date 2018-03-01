@@ -1,9 +1,4 @@
 package com.scraper.bean;
-import java.sql.Date;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
@@ -15,15 +10,6 @@ public class TopNews {
 	private String title;
 	private String source;
 	
-	//@Temporal(TemporalType.DATE)
-	private Date lastUpdateDtm;
-	
-	public Date getLastUpdateDtm() {
-		return lastUpdateDtm;
-	}
-	public void setLastUpdateDtm(Date lastUpdateDtm) {
-		this.lastUpdateDtm = lastUpdateDtm;
-	}
 	public TopNews()
 	{
 		
@@ -49,8 +35,7 @@ public class TopNews {
 	    public String toString() {
 	        return "TopNews{" +
 	                ", Title='" + title + '\'' +
-	                ", Source=" + source + '\'' +
-	                ", LastUpdateDtm=" + lastUpdateDtm +
+	                ", Source=" + source + 
 	                '}';
 	    }
 }

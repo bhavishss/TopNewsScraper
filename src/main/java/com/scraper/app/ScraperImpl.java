@@ -13,7 +13,7 @@ import com.scraper.service.HackerNewsClient;
 
 @Component
 public class ScraperImpl {
-	Logger logger = LoggerFactory.getLogger(ScraperImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(ScraperImpl.class);
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("DD/MM/yyyy HH:mm:ss");
 	
 	@Autowired
@@ -21,13 +21,13 @@ public class ScraperImpl {
 	
 	@Scheduled(cron="${scraper.cron.expression}")
     public void doNewsScrapper() throws Exception {
-		logger.info("Top News scraping daily job started: "+dateFormat.format(new Date()));
-    	System.out.println("Start" + dateFormat.format(new Date()));
+		log.info("Top News scraping daily job started: "+dateFormat.format(new Date()));
     	try {
     		//Calling the client method
     		hackerNewsClient.getTopNewsData();
-    		logger.info("Top News scraping daily job ended: "+dateFormat.format(new Date()));
+    		log.info("Top News scraping daily job ended: "+dateFormat.format(new Date()));
 		} catch (Exception e) {
+			log.info("Error: "+ e.getMessage());
 			throw e;
 		}
     }
